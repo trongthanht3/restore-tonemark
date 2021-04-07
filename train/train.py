@@ -60,10 +60,10 @@ def main():
 def iter_pick_sentence(keyword, path1, path2):
     """対象の音節が含まれる文をyieldする"""
     for sentence, no_tonemark_sentence in zip(open(path1, 'r'), open(path2, 'r')):
-        no_tonemark_lower_syllables = no_tonemark_sentence.rstrip().decode('utf-8').split(u' ')
+        no_tonemark_lower_syllables = no_tonemark_sentence.rstrip().encode('utf-8').decode('utf-8').split(u' ')
 
         if keyword in no_tonemark_lower_syllables:
-            sentence = sentence.rstrip().decode('utf-8').split(u' ')
+            sentence = sentence.rstrip().encode('utf-8').decode('utf-8').split(u' ')
             # 音節とそのインデックス
             syllable_index = [(i, sentence[i]) for i, w in enumerate(no_tonemark_lower_syllables) if w == keyword]
 
