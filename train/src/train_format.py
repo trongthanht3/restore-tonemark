@@ -76,4 +76,4 @@ class PrintFeatures():
     def print_features(self):
         for c, f in zip(self.class_list, self.feature_list):
             f = [u'{}:{}'.format(k,v) for k, v in sorted(f.items())]
-            print u'{} {}'.format(c, u' '.join(f)).encode('utf-8')
+            print (u'{} {}'.format(c, u' '.join(f)).encode('utf-8'))

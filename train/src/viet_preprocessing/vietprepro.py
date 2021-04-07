@@ -26,5 +26,5 @@ def BoDau(a): #hoạt động chính xác
     if i<=66 :return kqua[12+1-lower]
 
 
-if __name__ == "__main__":
-    main()
+# if __name__ == "__main__":
+#     main()

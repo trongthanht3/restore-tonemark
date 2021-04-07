@@ -6,8 +6,7 @@
 """
 
 import sys
-import ConfigParser
-from itertools import izip
+import configparser as ConfigParser
 from src.train_utils import *
 from src.train_format import *
 from src.liblinear.liblinear import *
@@ -17,7 +16,7 @@ from src.delete_tone_mark import *
 
 
 def main():
-    inifile = ConfigParser.SafeConfigParser()
+    inifile = ConfigParser.ConfigParser()
     inifile.read("./config.ini")
 
     path1 = inifile.get("settings", "path1")
@@ -26,13 +25,13 @@ def main():
     window_size = int(inifile.get("settings", "window_size"))
 
     # 学習対象の音節リストを読み込み
-    print 'loading syllable list'
+    print ('loading syllable list')
     syllable_list = make_syllable(path1)
 
-    print 'pick feature and training'
+    print ('pick feature and training')
     cannot_output = 0
     for target_syllable in syllable_list:
-        print 'target:{}'.format(target_syllable),
+        print ('target:{}'.format(target_syllable),)
         pf = PrintFeatures()
         for syllable_indexs, sentence in iter_pick_sentence(target_syllable, path1, path2):
             # class_id, feature, feature_idを作成しながら素性を作成
@@ -41,12 +40,12 @@ def main():
                 pf.add_liblinear_format(f)
 
         # 学習を行う。
-        print '\ttraining',
+        print ('\ttraining',)
         prob = problem(pf.class_list, pf.feature_list)
         m = train(prob, '-q')
 
         # class_id, feature, modelを保存する。
-        print '\twriting'
+        print ('\twriting')
         try:
             target_syllable = target_syllable.encode('utf-8')
             pf.save_class_dict("{}/{}.class_map".format(preserve_dir_path, target_syllable))
@@ -55,12 +54,12 @@ def main():
         except:
             cannot_output += 1
             continue
-    print "Can't train:{}".format(cannot_output)
+    print ("Can't train:{}".format(cannot_output))
 
 
 def iter_pick_sentence(keyword, path1, path2):
     """対象の音節が含まれる文をyieldする"""
-    for sentence, no_tonemark_sentence in izip(open(path1, 'r'), open(path2, 'r')):
+    for sentence, no_tonemark_sentence in zip(open(path1, 'r'), open(path2, 'r')):
         no_tonemark_lower_syllables = no_tonemark_sentence.rstrip().decode('utf-8').split(u' ')
 
         if keyword in no_tonemark_lower_syllables:
