@@ -1,6 +1,7 @@
 # Vietnamese Diacritics Restoration
 
 This is a Vietnamese Diacritics Restoration tool based on SVMs.
+This is a fork version for python3. It's has a lot of bug but still working.
 
 ## Usage
 
@@ -36,6 +37,18 @@ window_size = 2
 ```
 
 ### Predict
+
+```sh
+% emacs config.ini
+```
+
+```conf
+[settings]
+path1 = /Users/takahashi/restore-tonemark/train/resource/VNTQcorpus_small.txt
+path2 = /Users/takahashi/restore-tonemark/train/resource/VNTQcorpus_small_no_tone_mark.txt
+preserve_dir_path = /Users/takahashi/restore-tonemark/train/models
+model_dir = /Users/takahashi/restore-tonemark/train/models
+window_size = 2
 
 ```sh
 % cd predict
