@@ -38,6 +38,7 @@ def get_feature(cur_keyword, index, syllables, window_size):
         get_syllable_type_feature(target_syllable),
         get_syllable_type_feature(bi_gram),
     )
+    # print("feature: ", len(feature))
     return Feature(feature)
 
 def get_window_syllables(syllables, index, window_size):

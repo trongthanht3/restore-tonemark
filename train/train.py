@@ -33,9 +33,12 @@ def main():
     for target_syllable in syllable_list:
         print ('target:{}'.format(target_syllable),)
         pf = PrintFeatures()
+        # print("pf: ", pf)
         for syllable_indexs, sentence in iter_pick_sentence(target_syllable, path1, path2):
             # class_id, feature, feature_idを作成しながら素性を作成
             for index, syllable in syllable_indexs:
+                # print("index: ", index)
+                # print("syllable: ", syllable)
                 f = get_feature(syllable, index, sentence, window_size)
                 pf.add_liblinear_format(f)
 
@@ -47,11 +50,13 @@ def main():
         # class_id, feature, modelを保存する。
         print ('\twriting')
         try:
-            target_syllable = target_syllable.encode('utf-8')
-            pf.save_class_dict("{}/{}.class_map".format(preserve_dir_path, target_syllable))
-            pf.save_feature_dict("{}/{}.feature_map".format(preserve_dir_path, target_syllable))
-            save_model("{}/{}.model".format(preserve_dir_path, target_syllable), m)
-        except:
+              target_syllable = target_syllable.encode('utf-8').decode('utf-8')
+              # print(target_syllable)
+              pf.save_class_dict("{}/{}.class_map".format(preserve_dir_path, target_syllable))
+              pf.save_feature_dict("{}/{}.feature_map".format(preserve_dir_path, target_syllable))
+              save_model("{}/{}.model".format(preserve_dir_path, target_syllable), m)
+        except Exception as err:
+            print(err)
             cannot_output += 1
             continue
     print ("Can't train:{}".format(cannot_output))

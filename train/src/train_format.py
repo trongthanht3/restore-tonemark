@@ -64,16 +64,16 @@ class PrintFeatures():
         """クラス番号辞書を保存"""
         with open(save_path, 'w') as fout:
             lines = [u'{}\t{}'.format(k, v) for k, v in sorted(self.class_dict.items(), key=lambda x:x[1])]
-            fout.write(u'\n'.join(lines).encode('utf-8'))
+            fout.write(u'\n'.join(lines).encode('utf-8').decode('utf-8'))
 
 
     def save_feature_dict(self, save_path):
         """素性辞書を保存"""
         with open(save_path, 'w') as fout:
             lines = [u'{}\t{}'.format(k, v) for k, v in sorted(self.feature_dict.items(), key=lambda x:x[1])]
-            fout.write(u'\n'.join(lines).encode('utf-8'))
+            fout.write(u'\n'.join(lines).encode('utf-8').decode('utf-8'))
 
     def print_features(self):
         for c, f in zip(self.class_list, self.feature_list):
             f = [u'{}:{}'.format(k,v) for k, v in sorted(f.items())]
-            print (u'{} {}'.format(c, u' '.join(f)).encode('utf-8'))
+            print (u'{} {}'.format(c, u' '.join(f)).encode('utf-8').decode('utf-8'))

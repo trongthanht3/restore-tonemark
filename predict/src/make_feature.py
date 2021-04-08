@@ -2,8 +2,23 @@
 # -*- coding: utf-8 -*-
 
 import os
-from predict_util import *
+# from predict_util import *
 from collections import defaultdict
+
+
+
+def load_syllable_map(filename):
+    return dict(
+        [reversed(line.rstrip().encode('utf-8').decode('utf-8').split(u'\t'))
+         for line in open(filename, 'r')]
+    )
+
+def load_syllable_class_map(filename):
+    return dict(
+        [line.rstrip().encode('utf-8').decode('utf-8').split(u'\t')
+         for line in open(filename, 'r')]
+    )
+
 
 def feature_mapping(model_dir, target_syllable_lower, features):
     feature_map_path = os.path.join(model_dir, '{}.feature_map'.format(target_syllable_lower))
@@ -23,7 +38,7 @@ def class_mapping(model_dir, target_syllable_lower, p_label):
     # 音節に対するマッピングファイルを読み込み
     syllable_class_map = load_syllable_map(syllable_map_path)
 
-    s = syllable_class_map.get(unicode(int(p_label)))
+    s = syllable_class_map.get(str(int(p_label)))
 
     if s != None:
         return s

@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import sys
-import ConfigParser
+import configparser as ConfigParser
 from src.liblinear.liblinear import *
 from src.liblinear.liblinearutil import *
 from src.make_feature import *
@@ -16,11 +16,15 @@ def main():
     file_path = set([p.split('.')[0] for p in os.listdir(model_dir)])
     window_size = 2
     # test_sentence = 'Toi la sinh vien'
-    for line in sys.stdin:
-        syllables = line.rstrip().decode('utf-8').split(u' ')
+    t = "qua quyet rangs"
+    lines = []
+    # lines.append(test_sentence)
+    lines.append(t)
+    for line in lines:
+        syllables = line.rstrip().encode('utf-8').decode('utf-8').split(u' ')
 
-        predicted_syllables = [tone_predict(i, syllables, model_dir, file_path, window_size) for i in xrange(len(syllables))]
-        print u' '.join(predicted_syllables).encode('utf-8')
+        predicted_syllables = [tone_predict(i, syllables, model_dir, file_path, window_size) for i in range(len(syllables))]
+        print (u' '.join(predicted_syllables).encode('utf-8').decode('utf-8'))
 
 def tone_predict(i, syllables, model_dir, file_path, window_size):
     target_syllable = syllables[i]
